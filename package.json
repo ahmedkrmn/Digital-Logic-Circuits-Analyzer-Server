@@ -1,0 +1,33 @@
+{
+  "name": "digital-logic-circuits-analyzer-server",
+  "version": "1.0.0",
+  "description": "Digital logic circuits analyzer server using deep learning and image processing.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "8.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmedkrmn/Digital-Logic-Circuits-Analyzer-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmedkrmn/Digital-Logic-Circuits-Analyzer-Server/issues"
+  },
+  "homepage": "https://github.com/ahmedkrmn/Digital-Logic-Circuits-Analyzer-Server#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  }
+}
