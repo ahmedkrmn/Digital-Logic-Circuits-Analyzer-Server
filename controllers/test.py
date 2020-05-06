@@ -1,4 +1,4 @@
-# image path = 'uploads/image'
+# image path = '/app/uploads/image'
 import json
 
 data = [

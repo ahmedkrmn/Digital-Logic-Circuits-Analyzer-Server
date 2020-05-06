@@ -9,6 +9,3 @@ node_modules/
 
 # eslint
 .eslint.js
-
-# image upload
-uploads

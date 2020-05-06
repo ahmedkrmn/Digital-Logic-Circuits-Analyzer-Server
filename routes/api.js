@@ -1,12 +1,13 @@
 const express = require('express');
 const apiResponse = require('../helpers/apiResponse');
+const path = require('path');
 const router = express.Router();
 const multer = require('multer');
 
 // Configure the storage object for multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads');
+    cb(null, path.join(__dirname, '../uploads'));
   },
   filename: (req, file, cb) => {
     let image_type;
@@ -23,7 +24,9 @@ const upload = multer({ storage });
 router.get('/', (req, res) => {
   // Spawn the python process that handles ML and Image Processing
   var spawn = require('child_process').spawn;
-  var process = spawn('python', ['controllers/test_numpy.py']);
+  var process = spawn('python', [
+    path.join(__dirname, '../controllers/test_numpy.py'),
+  ]);
 
   process.stdout.on('data', function (data) {
     return apiResponse.successResponse(res, data.toString());
@@ -36,7 +39,10 @@ router.post('/analyze', upload.single('image_file'), (req, res) => {
 
   // Spawn the python process that handles ML and Image Processing
   var spawn = require('child_process').spawn;
-  var process = spawn('python', ['controllers/test.py', type]);
+  var process = spawn('python', [
+    path.join(__dirname, '../controllers/test.py'),
+    type,
+  ]);
 
   process.stdout.on('data', function (data) {
     return apiResponse.successResponseWithData(
