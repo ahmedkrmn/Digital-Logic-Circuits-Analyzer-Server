@@ -21,7 +21,13 @@ const upload = multer({ storage });
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  return apiResponse.successResponse(res, 'server up and running!');
+  // Spawn the python process that handles ML and Image Processing
+  var spawn = require('child_process').spawn;
+  var process = spawn('python', ['controllers/test_numpy.py']);
+
+  process.stdout.on('data', function (data) {
+    return apiResponse.successResponse(res, data.toString());
+  });
 });
 
 router.post('/analyze', upload.single('image_file'), (req, res) => {
