@@ -23,10 +23,10 @@ from skimage.util import img_as_float
 # ************************ reading the image and the templates *************
 filename = 'circuit.png'
 img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
-temp1 = cv2.imread("and.PNG", cv2.IMREAD_GRAYSCALE)
-temp2 = cv2.imread("or.PNG", cv2.IMREAD_GRAYSCALE)
-temp3 = cv2.imread("xor.PNG", cv2.IMREAD_GRAYSCALE)
-temp4 = cv2.imread("not.PNG", cv2.IMREAD_GRAYSCALE)
+temp1 = cv2.imread("/app/uploads/and.PNG", cv2.IMREAD_GRAYSCALE)
+temp2 = cv2.imread("/app/uploads/or.PNG", cv2.IMREAD_GRAYSCALE)
+temp3 = cv2.imread("/app/uploads/xor.PNG", cv2.IMREAD_GRAYSCALE)
+temp4 = cv2.imread("/app/uploads/not.PNG", cv2.IMREAD_GRAYSCALE)
 # greimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # template = cv2.imread("messi_face.jpg", 0)
 # w, h = template.shape[::-1]
