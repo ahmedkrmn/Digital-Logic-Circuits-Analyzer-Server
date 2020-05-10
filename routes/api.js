@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
   // Spawn the python process that handles ML and Image Processing
   var spawn = require('child_process').spawn;
   var process = spawn('python', [
-    path.join(__dirname, '../controllers/test_numpy.py'),
+    path.join(__dirname, '../controllers/image_to_truthtable.py'),
   ]);
 
   process.stdout.on('data', function (data) {

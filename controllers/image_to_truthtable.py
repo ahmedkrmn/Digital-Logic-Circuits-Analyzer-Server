@@ -9,6 +9,12 @@ Original file is located at
 
 # Commented out IPython magic to ensure Python compatibility.
 # ****************************** Importing Labraries *****************************************
+import copy
+import json
+from XOR import XOR
+from NOT import NOT
+from OR import OR
+from AND import AND
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -42,7 +48,7 @@ detected_gates = []
 
 # **************************** Detecting and gates *************************
 res = cv2.matchTemplate(img, temp1, cv2.TM_CCORR_NORMED)
-threshold = 0.99;
+threshold = 0.99
 loc = np.where(res >= threshold)
 i = 0
 for pt in zip(*loc[::-1]):
@@ -51,15 +57,16 @@ for pt in zip(*loc[::-1]):
         pt_prev = pt
         i += 1
     else:
-        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5 \
+        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5
                 and pt[1] >= pt_prev[1] - 5 and pt[1] <= pt_prev[1] + 5):
-            detected_gates.append([pt[0], pt[1], pt[0] + w_and, pt[1] + h_and, 0])
+            detected_gates.append(
+                [pt[0], pt[1], pt[0] + w_and, pt[1] + h_and, 0])
             pt_prev = pt
             i += 1
 
 # **************************** Detecting or gates *************************
 res = cv2.matchTemplate(img, temp2, cv2.TM_CCORR_NORMED)
-threshold = 0.99;
+threshold = 0.99
 loc = np.where(res >= threshold)
 i = 0
 for pt in zip(*loc[::-1]):
@@ -68,15 +75,16 @@ for pt in zip(*loc[::-1]):
         pt_prev = pt
         i += 1
     else:
-        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5 \
+        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5
                 and pt[1] >= pt_prev[1] - 5 and pt[1] <= pt_prev[1] + 5):
-            detected_gates.append([pt[0], pt[1], pt[0] + w_or, pt[1] + h_or, 1])
+            detected_gates.append(
+                [pt[0], pt[1], pt[0] + w_or, pt[1] + h_or, 1])
             pt_prev = pt
             i += 1
 
 # **************************** Detecting xor gates *************************
 res = cv2.matchTemplate(img, temp3, cv2.TM_CCORR_NORMED)
-threshold = 0.99;
+threshold = 0.99
 loc = np.where(res >= threshold)
 i = 0
 for pt in zip(*loc[::-1]):
@@ -85,15 +93,16 @@ for pt in zip(*loc[::-1]):
         pt_prev = pt
         i += 1
     else:
-        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5 \
+        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5
                 and pt[1] >= pt_prev[1] - 5 and pt[1] <= pt_prev[1] + 5):
-            detected_gates.append([pt[0], pt[1], pt[0] + w_xor, pt[1] + h_xor, 2])
+            detected_gates.append(
+                [pt[0], pt[1], pt[0] + w_xor, pt[1] + h_xor, 2])
             pt_prev = pt
             i += 1
 
 # **************************** Detecting not gates *************************
 res = cv2.matchTemplate(img, temp4, cv2.TM_CCORR_NORMED)
-threshold = 0.99;
+threshold = 0.99
 loc = np.where(res >= threshold)
 i = 0
 for pt in zip(*loc[::-1]):
@@ -102,9 +111,10 @@ for pt in zip(*loc[::-1]):
         pt_prev = pt
         i += 1
     else:
-        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5 \
+        if not (pt[0] >= pt_prev[0] - 5 and pt[0] <= pt_prev[0] + 5
                 and pt[1] >= pt_prev[1] - 5 and pt[1] <= pt_prev[1] + 5):
-            detected_gates.append([pt[0], pt[1], pt[0] + w_not, pt[1] + h_not, 3])
+            detected_gates.append(
+                [pt[0], pt[1], pt[0] + w_not, pt[1] + h_not, 3])
             pt_prev = pt
             i += 1
 
@@ -190,7 +200,7 @@ image_of_points = imgForDrawing - img
 copy_image_of_points = image_of_points.copy()
 for x in range(len(detected_gates)):
     copy_image_of_points[detected_gates[x][1]: detected_gates[x][3] + 1,
-    detected_gates[x][0]: detected_gates[x][2] + 1] = 0
+                         detected_gates[x][0]: detected_gates[x][2] + 1] = 0
 
 # plt.imshow(copy_image_of_points , cmap = 'gray')
 
@@ -310,10 +320,14 @@ for first_obj in range(len(detected_gates) - 1):
     for second_obj in range(first_obj + 1, len(detected_gates)):
 
         # ***************** Getting the coordinates of point 1,2 ****************
-        x_first_object = (detected_gates[first_obj][2] + detected_gates[first_obj][0]) / 2
-        x_second_object = (detected_gates[second_obj][2] + detected_gates[second_obj][0]) / 2
-        y_first_object = (detected_gates[first_obj][3] + detected_gates[first_obj][1]) / 2
-        y_second_object = (detected_gates[second_obj][3] + detected_gates[second_obj][1]) / 2
+        x_first_object = (
+            detected_gates[first_obj][2] + detected_gates[first_obj][0]) / 2
+        x_second_object = (
+            detected_gates[second_obj][2] + detected_gates[second_obj][0]) / 2
+        y_first_object = (
+            detected_gates[first_obj][3] + detected_gates[first_obj][1]) / 2
+        y_second_object = (
+            detected_gates[second_obj][3] + detected_gates[second_obj][1]) / 2
 
         point1 = (x_first_object, y_first_object)
         point2 = (x_second_object, y_second_object)
@@ -323,10 +337,12 @@ for first_obj in range(len(detected_gates) - 1):
         # Will delete all gates except for our two gates
         for x in range(len(detected_gates)):
             if x != first_obj and x != second_obj:
-                mask[detected_gates[x][1]: detected_gates[x][3] + 1, detected_gates[x][0]: detected_gates[x][2] + 1] = 0
+                mask[detected_gates[x][1]: detected_gates[x][3] + 1,
+                     detected_gates[x][0]: detected_gates[x][2] + 1] = 0
 
         # E7na kda b2a m3ana image feeha only 2 gates
-        edited_image_1 = cv2.bitwise_and(src1=np.array(cut_img_horizontally), src2=mask)
+        edited_image_1 = cv2.bitwise_and(
+            src1=np.array(cut_img_horizontally), src2=mask)
 
         # Will cut any large point left to both the gates
         for point in range(len(centroids_large_points)):
@@ -335,7 +351,8 @@ for first_obj in range(len(detected_gates) - 1):
             point_x = int(centroids_large_points[point][0])
             point_y = int(centroids_large_points[point][1])
             if point_x < x_first_object and point_x < x_second_object:
-                edited_image_1[point_y - 10: point_y + 10, point_x - 10: point_x + 10] = 0
+                edited_image_1[point_y - 10: point_y +
+                               10, point_x - 10: point_x + 10] = 0
 
         edited_image_1 = np.uint8(edited_image_1)
         # Append it to image_mat_horz
@@ -354,7 +371,8 @@ for first_obj in range(len(detected_gates) - 1):
         binary = image.copy()
 
         # Find contours from thresholded, binary image
-        contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        contours, hierarchy = cv2.findContours(
+            binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         # Draw all contours on a copy of the original image
         # contours_image = cv2.drawContours(contours_image, contours, -1, (0,255,0), 3)
@@ -397,10 +415,14 @@ for first_obj in range(len(detected_gates) - 1):
     for second_obj in range(first_obj + 1, len(detected_gates)):
 
         # ***************** Getting the coordinates of point 1,2 ****************
-        x_first_object = (detected_gates[first_obj][2] + detected_gates[first_obj][0]) / 2
-        x_second_object = (detected_gates[second_obj][2] + detected_gates[second_obj][0]) / 2
-        y_first_object = (detected_gates[first_obj][3] + detected_gates[first_obj][1]) / 2
-        y_second_object = (detected_gates[second_obj][3] + detected_gates[second_obj][1]) / 2
+        x_first_object = (
+            detected_gates[first_obj][2] + detected_gates[first_obj][0]) / 2
+        x_second_object = (
+            detected_gates[second_obj][2] + detected_gates[second_obj][0]) / 2
+        y_first_object = (
+            detected_gates[first_obj][3] + detected_gates[first_obj][1]) / 2
+        y_second_object = (
+            detected_gates[second_obj][3] + detected_gates[second_obj][1]) / 2
 
         point1 = (x_first_object, y_first_object)
         point2 = (x_second_object, y_second_object)
@@ -409,10 +431,12 @@ for first_obj in range(len(detected_gates) - 1):
 
         for x in range(len(detected_gates)):
             if x != first_obj and x != second_obj:
-                mask[detected_gates[x][1]: detected_gates[x][3] + 1, detected_gates[x][0]: detected_gates[x][2] + 1] = 0
+                mask[detected_gates[x][1]: detected_gates[x][3] + 1,
+                     detected_gates[x][0]: detected_gates[x][2] + 1] = 0
 
         # E7na kda b2a m3ana image feeha only 2 gates
-        edited_image_1 = cv2.bitwise_and(src1=np.array(cut_img_vertically), src2=mask)
+        edited_image_1 = cv2.bitwise_and(
+            src1=np.array(cut_img_vertically), src2=mask)
 
         # Will cut any large point left to both the gates
         for point in range(len(centroids_large_points)):
@@ -421,7 +445,8 @@ for first_obj in range(len(detected_gates) - 1):
             point_x = int(centroids_large_points[point][0])
             point_y = int(centroids_large_points[point][1])
             if point_x < x_first_object and point_x < x_second_object:
-                edited_image_1[point_y - 10: point_y + 10, point_x - 10: point_x + 10] = 0
+                edited_image_1[point_y - 10: point_y +
+                               10, point_x - 10: point_x + 10] = 0
 
         edited_image_1 = np.uint8(edited_image_1)
         # Append it to image_mat_horz
@@ -440,7 +465,8 @@ for first_obj in range(len(detected_gates) - 1):
         binary = image.copy()
 
         # Find contours from thresholded, binary image
-        contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        contours, hierarchy = cv2.findContours(
+            binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         # Draw all contours on a copy of the original image
         # contours_image = cv2.drawContours(contours_image, contours, -1, (0,255,0), 3)
@@ -517,11 +543,6 @@ for gate in connected_gates :
 # Starting from here , we are calculating the truth table
 # ******************************************************************************************************************* #
 
-from AND import AND
-from OR import OR
-from NOT import NOT
-from XOR import XOR
-import copy
 
 '''
 connected_gates = [ [None , None , None , 0] ,
@@ -540,7 +561,8 @@ connected_gates = [['2', '5', None, 0],
                    ['1', None, None, 2],
                    ['4', None, None, 3]]
 
-sorted_initial_connected_gates = [[None, None, None, 2], [None, None, None, 0], ['1', None, None, 2]]
+sorted_initial_connected_gates = [[None, None, None, 2], [
+    None, None, None, 0], ['1', None, None, 2]]
 
 input_indices = []
 
@@ -563,13 +585,17 @@ for gate in sorted_initial_connected_gates:
 for i in range(len(connected_gates)):
 
     if connected_gates[i][3] == 0:
-        Gates.append(AND(connected_gates[i][0], connected_gates[i][1], connected_gates[i][2], connected_gates[i][3]))
+        Gates.append(AND(connected_gates[i][0], connected_gates[i]
+                         [1], connected_gates[i][2], connected_gates[i][3]))
     elif connected_gates[i][3] == 1:
-        Gates.append(OR(connected_gates[i][0], connected_gates[i][1], connected_gates[i][2], connected_gates[i][3]))
+        Gates.append(OR(connected_gates[i][0], connected_gates[i]
+                        [1], connected_gates[i][2], connected_gates[i][3]))
     elif connected_gates[i][3] == 2:
-        Gates.append(XOR(connected_gates[i][0], connected_gates[i][1], connected_gates[i][2], connected_gates[i][3]))
+        Gates.append(XOR(connected_gates[i][0], connected_gates[i]
+                         [1], connected_gates[i][2], connected_gates[i][3]))
     elif connected_gates[i][3] == 3:
-        Gates.append(NOT(connected_gates[i][0], connected_gates[i][2], connected_gates[i][3]))
+        Gates.append(
+            NOT(connected_gates[i][0], connected_gates[i][2], connected_gates[i][3]))
 
 # Hena bn7dd 3ndna kam input
 gate_index = 0
@@ -612,7 +638,8 @@ for myGate in Gates:
 for inputNumber in range(2 ** input_counter):
     input_element = []
     for shift in range(input_counter):
-        input_element.append((inputNumber >> (input_counter - shift - 1)) & 0x1)
+        input_element.append(
+            (inputNumber >> (input_counter - shift - 1)) & 0x1)
     inputs_table.append(input_element)
 
 '''
@@ -634,12 +661,14 @@ for iteration in range(2 ** input_counter):
             Gates.append(
                 AND(connected_gates[i][0], connected_gates[i][1], connected_gates[i][2], connected_gates[i][3]))
         elif connected_gates[i][3] == 1:
-            Gates.append(OR(connected_gates[i][0], connected_gates[i][1], connected_gates[i][2], connected_gates[i][3]))
+            Gates.append(OR(connected_gates[i][0], connected_gates[i]
+                            [1], connected_gates[i][2], connected_gates[i][3]))
         elif connected_gates[i][3] == 2:
             Gates.append(
                 XOR(connected_gates[i][0], connected_gates[i][1], connected_gates[i][2], connected_gates[i][3]))
         elif connected_gates[i][3] == 3:
-            Gates.append(NOT(connected_gates[i][0], connected_gates[i][2], connected_gates[i][3]))
+            Gates.append(
+                NOT(connected_gates[i][0], connected_gates[i][2], connected_gates[i][3]))
 
     gates_with_output_eq_None = []
     gates_with_output_eq_None = copy.copy(Gates)  # Shallow copy
@@ -734,12 +763,14 @@ for iteration in range(2 ** input_counter):
             output_elements.append(Gates[myGate].output)
     final_truth_table.append(output_elements)
 
-# print("finisheeeeeeeeeeed")
+print(json.dumps(final_truth_table))
+
+# print("finished")
 
 # print(Not_output_gates)
-#print(len(final_truth_table))
-#print(names_of_inputs)
-#for element in final_truth_table:
+# print(len(final_truth_table))
+# print(names_of_inputs)
+# for element in final_truth_table:
 #    print(element)
 
 '''
