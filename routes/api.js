@@ -1,6 +1,7 @@
 const express = require("express");
 const apiResponse = require("../helpers/apiResponse");
 const path = require("path");
+const spawn = require("child_process").spawn;
 const router = express.Router();
 const multer = require("multer");
 
@@ -22,11 +23,36 @@ const upload = multer({ storage });
 
 /* GET home page. */
 router.get("/", (req, res) => {
-  // Spawn the python process that handles ML and Image Processing
-  var spawn = require("child_process").spawn;
-  var process = spawn("python", [
-    path.join(__dirname, "../controllers/image_to_truthtable.py"),
+  return apiResponse.successResponse(res, "You've reached the API!");
+});
+
+router.get("/test", (req, res) => {
+  const process = spawn("python", [
+    path.join(__dirname, "../controllers/test.py"),
   ]);
+
+  process.stdout.on("data", function (out) {
+    return apiResponse.successResponseWithData(
+      res,
+      "Analysis Success",
+      JSON.parse(out.toString())
+    );
+  });
+});
+
+router.post("/analyze", upload.single("image_file"), (req, res) => {
+  const type = req.body.type;
+  // const image = req.file;
+
+  let process;
+
+  if (type == "upload") {
+    process = spawn("python", [path.join(__dirname, "../controllers/test.py")]);
+  } else if (type == "online") {
+    process = spawn("python", [
+      path.join(__dirname, "../controllers/image_to_truthtable.py"),
+    ]);
+  }
 
   process.stdout.on("data", function (out) {
     return apiResponse.successResponseWithData(
@@ -38,26 +64,6 @@ router.get("/", (req, res) => {
 
   process.stderr.on("data", function (err) {
     return apiResponse.ErrorResponse(res, err.toString());
-  });
-});
-
-router.post("/analyze", upload.single("image_file"), (req, res) => {
-  const type = req.body.type;
-  // const image = req.file;
-
-  // Spawn the python process that handles ML and Image Processing
-  var spawn = require("child_process").spawn;
-  var process = spawn("python", [
-    path.join(__dirname, "../controllers/test.py"),
-    type,
-  ]);
-
-  process.stdout.on("data", function (data) {
-    return apiResponse.successResponseWithData(
-      res,
-      "Analysis Success",
-      JSON.parse(data.toString())
-    );
   });
 });
 
