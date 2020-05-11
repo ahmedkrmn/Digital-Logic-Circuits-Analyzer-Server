@@ -29,7 +29,11 @@ router.get("/", (req, res) => {
   ]);
 
   process.stdout.on("data", function (out) {
-    return apiResponse.successResponse(res, out.toString());
+    return apiResponse.successResponseWithData(
+      res,
+      "Analysis Success",
+      JSON.parse(out.toString())
+    );
   });
 
   process.stderr.on("data", function (err) {
@@ -51,7 +55,7 @@ router.post("/analyze", upload.single("image_file"), (req, res) => {
   process.stdout.on("data", function (data) {
     return apiResponse.successResponseWithData(
       res,
-      "analysis success",
+      "Analysis Success",
       JSON.parse(data.toString())
     );
   });
