@@ -10,6 +10,7 @@ Original file is located at
 # Commented out IPython magic to ensure Python compatibility.
 # ****************************** Importing Labraries *****************************************
 import copy
+import sys
 import json
 from XOR import XOR
 from NOT import NOT
@@ -19,15 +20,13 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import numpy as np
 import argparse
-import cv2
 from skimage.util import img_as_float
 
 # %matplotlib inline
 
 # ************************ reading the image and the templates *************
-filename = "/app/uploads/image"
+filename = "/app/uploads/" + sys.argv[1]
 
 img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
 temp1 = cv2.imread("/app/controllers/templates/and.PNG", cv2.IMREAD_GRAYSCALE)
@@ -37,7 +36,6 @@ temp4 = cv2.imread("/app/controllers/templates/not.PNG", cv2.IMREAD_GRAYSCALE)
 # greimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # template = cv2.imread("messi_face.jpg", 0)
 # w, h = template.shape[::-1]
-
 # ************************ Gate Detection *********************************
 
 # ******************************* getting height and width for each gate ***************
