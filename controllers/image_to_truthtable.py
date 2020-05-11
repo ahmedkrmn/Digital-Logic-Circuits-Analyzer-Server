@@ -523,15 +523,15 @@ for gate in range(len(connected_gates)):
     elif connected_gates[gate][3] != 3 and (connected_gates[gate][0] == None or connected_gates[gate][1] == None):
         input_gates.append(detected_gates[gate] + [gate])
 
-# I sort them 
+# I sort them
 detected_objects_sorted = input_gates.sort(key=lambda x: x[1])
-for gate in input_gates :
-     sorted_initial_gates.append(connected_gates[gate[5]] + [gate[5]])
+for gate in input_gates:
+    sorted_initial_gates.append(connected_gates[gate[5]] + [gate[5]])
 
 '''
-for gate in connected_gates :
-     if gate not in sorted_connected_gates:
-          sorted_connected_gates.append(gate)
+for gate in connected_gates:
+    if gate not in sorted_connected_gates:
+        sorted_connected_gates.append(gate)
 '''
 
 # print(sorted_initial_connected_gates)
