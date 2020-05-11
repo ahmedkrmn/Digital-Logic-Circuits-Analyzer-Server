@@ -15,13 +15,12 @@ from XOR import XOR
 from NOT import NOT
 from OR import OR
 from AND import AND
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import numpy as np
 import argparse
-import cv2
 from skimage.util import img_as_float
 
 # %matplotlib inline
