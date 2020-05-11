@@ -526,7 +526,7 @@ for gate in range(len(connected_gates)):
 # I sort them
 detected_objects_sorted = input_gates.sort(key=lambda x: x[1])
 for gate in input_gates:
-    sorted_initial_gates.append(connected_gates[gate[5]] + [gate[5]])
+    sorted_initial_connected_gates.append(connected_gates[gate[5]] + [gate[5]])
 
 '''
 for gate in connected_gates:
