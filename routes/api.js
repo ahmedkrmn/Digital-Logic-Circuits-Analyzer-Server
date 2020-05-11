@@ -16,7 +16,12 @@ const storage = multer.diskStorage({
     if (file.mimetype.split("/")[0] == "image")
       image_type = file.mimetype.split("/")[1];
     else image_type = "png";
-    cb(null, "image");
+    //cb(null, "image");
+
+    // Use the random variable name assigned by multer
+    // Using the fixed "image" will cause problems if multiple people are using
+    // the api at the same time.
+    cb(null, file.filename);
   },
 });
 const upload = multer({ storage });
@@ -42,7 +47,8 @@ router.get("/test", (req, res) => {
 
 router.post("/analyze", upload.single("image_file"), (req, res) => {
   const type = req.body.type;
-  // const image = req.file;
+  // modified filename after returning from the upload middleware
+  const image = req.file.filename;
 
   let process;
 
@@ -51,6 +57,7 @@ router.post("/analyze", upload.single("image_file"), (req, res) => {
   } else if (type == "online") {
     process = spawn("python", [
       path.join(__dirname, "../controllers/image_to_truthtable.py"),
+      image,
     ]);
   }
 

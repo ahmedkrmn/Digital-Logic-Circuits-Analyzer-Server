@@ -10,6 +10,7 @@ Original file is located at
 # Commented out IPython magic to ensure Python compatibility.
 # ****************************** Importing Labraries *****************************************
 import copy
+import sys
 import json
 from XOR import XOR
 from NOT import NOT
@@ -25,7 +26,7 @@ from skimage.util import img_as_float
 # %matplotlib inline
 
 # ************************ reading the image and the templates *************
-filename = "/app/uploads/image"
+filename = "/app/uploads/" + sys.argv[1]
 
 img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
 temp1 = cv2.imread("/app/controllers/templates/and.PNG", cv2.IMREAD_GRAYSCALE)
