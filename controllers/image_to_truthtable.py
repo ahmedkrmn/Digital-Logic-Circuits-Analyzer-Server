@@ -27,7 +27,9 @@ from skimage.util import img_as_float
 # %matplotlib inline
 
 # ************************ reading the image and the templates *************
-img = cv2.imread("/app/uploads/image", cv2.IMREAD_GRAYSCALE)
+filename = "/app/uploads/image"
+
+img = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
 temp1 = cv2.imread("/app/controllers/templates/and.PNG", cv2.IMREAD_GRAYSCALE)
 temp2 = cv2.imread("/app/controllers/templates/or.PNG", cv2.IMREAD_GRAYSCALE)
 temp3 = cv2.imread("/app/controllers/templates/xor.PNG", cv2.IMREAD_GRAYSCALE)
@@ -172,7 +174,7 @@ centroids_large_points = output[3]
 # ****************************Corner detection*********************************
 # We do that in order to get the points of intersection
 
-filename = 'circuit.png'
+
 imgForConrnersDetection = cv2.imread(filename)
 
 gray = cv2.cvtColor(imgForConrnersDetection, cv2.COLOR_BGR2GRAY)
@@ -372,7 +374,7 @@ for first_obj in range(len(detected_gates) - 1):
 
         # Find contours from thresholded, binary image
         contours, hierarchy = cv2.findContours(
-            binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[-2:]
 
         # Draw all contours on a copy of the original image
         # contours_image = cv2.drawContours(contours_image, contours, -1, (0,255,0), 3)
@@ -466,7 +468,7 @@ for first_obj in range(len(detected_gates) - 1):
 
         # Find contours from thresholded, binary image
         contours, hierarchy = cv2.findContours(
-            binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[-2:]
 
         # Draw all contours on a copy of the original image
         # contours_image = cv2.drawContours(contours_image, contours, -1, (0,255,0), 3)
@@ -515,7 +517,7 @@ for first_obj in range(len(detected_gates) - 1):
 
 # Now let's sort the gates so that the gates that takes inputs from user are listed
 # from top to bottom
-sorted_initial_gates = []
+sorted_initial_connected_gates = []
 input_gates = []
 for gate in range(len(connected_gates)):
     if connected_gates[gate][3] == 3 and connected_gates[gate][0] == None:
@@ -526,7 +528,7 @@ for gate in range(len(connected_gates)):
 # I sort them
 detected_objects_sorted = input_gates.sort(key=lambda x: x[1])
 for gate in input_gates:
-    sorted_initial_gates.append(connected_gates[gate[5]])
+    sorted_initial_connected_gates.append(connected_gates[gate[5]])
 
 '''
 for gate in connected_gates :
@@ -534,7 +536,7 @@ for gate in connected_gates :
           sorted_connected_gates.append(gate)
 '''
 
-# print(sorted_initial_gates)
+# print(sorted_initial_connected_gates)
 
 # plt.imshow(img , cmap='gray')
 
@@ -543,29 +545,7 @@ for gate in connected_gates :
 # Starting from here , we are calculating the truth table
 # ******************************************************************************************************************* #
 
-
-'''
-connected_gates = [ [None , None , None , 0] ,
-                   [None , None , None , 1] ,
-                   [str(0) , str(1) , None , 0],
-                   [str(0) , str(1) , None , 1]]
-
-connected_gates = [[None, None, None , 3],
-                  [None , None , None , 0],
-                  ["0", "1", None , 1]]
-'''
-connected_gates = [['2', '5', None, 0],
-                   [None, None, None, 0],
-                   ['1', '3', None, 1],
-                   [None, None, None, 2],
-                   ['1', None, None, 2],
-                   ['4', None, None, 3]]
-
-sorted_initial_connected_gates = [[None, None, None, 2], [
-    None, None, None, 0], ['1', None, None, 2]]
-
 input_indices = []
-
 Gates = []
 final_truth_table = []
 input_counter = 0
