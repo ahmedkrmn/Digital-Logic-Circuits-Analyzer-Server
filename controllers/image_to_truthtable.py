@@ -15,7 +15,6 @@ from XOR import XOR
 from NOT import NOT
 from OR import OR
 from AND import AND
-
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,7 +35,9 @@ temp4 = cv2.imread("/app/controllers/templates/not.PNG", cv2.IMREAD_GRAYSCALE)
 # greimg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # template = cv2.imread("messi_face.jpg", 0)
 # w, h = template.shape[::-1]
-
+print(img)
+print("****************")
+print(temp4)
 # ************************ Gate Detection *********************************
 
 # ******************************* getting height and width for each gate ***************
