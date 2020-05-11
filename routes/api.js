@@ -10,19 +10,15 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "../uploads"));
   },
-  filename: (req, file, cb) => {
-    let image_type;
-    // If uploaded by user or sent as blob json
-    if (file.mimetype.split("/")[0] == "image")
-      image_type = file.mimetype.split("/")[1];
-    else image_type = "png";
-    //cb(null, "image");
-
-    // Use the random variable name assigned by multer
-    // Using the fixed "image" will cause problems if multiple people are using
-    // the api at the same time.
-    cb(null, file.filename);
-  },
+  // Use dynamic file name instead of this
+  // filename: (req, file, cb) => {
+  //   let image_type;
+  //   // If uploaded by user or sent as blob json
+  //   if (file.mimetype.split("/")[0] == "image")
+  //     image_type = file.mimetype.split("/")[1];
+  //   else image_type = "png";
+  //   cb(null, "image" + image_type);
+  // },
 });
 const upload = multer({ storage });
 
@@ -47,7 +43,6 @@ router.get("/test", (req, res) => {
 
 router.post("/analyze", upload.single("image_file"), (req, res) => {
   const type = req.body.type;
-  // modified filename after returning from the upload middleware
   const image = req.file.filename;
 
   let process;
