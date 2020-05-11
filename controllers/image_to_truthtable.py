@@ -523,10 +523,10 @@ for gate in range(len(connected_gates)):
     elif connected_gates[gate][3] != 3 and (connected_gates[gate][0] == None or connected_gates[gate][1] == None):
         input_gates.append(detected_gates[gate] + [gate])
 
-# I sort them
+# I sort them 
 detected_objects_sorted = input_gates.sort(key=lambda x: x[1])
-for gate in input_gates:
-    sorted_initial_connected_gates.append(connected_gates[gate[5]])
+for gate in input_gates :
+     sorted_initial_gates.append(connected_gates[gate[5]] + [gate[5]])
 
 '''
 for gate in connected_gates :
@@ -557,7 +557,7 @@ inputGates = []
 
 # Get the indices of the input gates in the Gates list
 for gate in sorted_initial_connected_gates:
-    input_indices.append(connected_gates.index(gate))
+    input_indices.append(gate[4])
 
 # E7na hena bn3ml objects mn el classes elly 3ndna
 for i in range(len(connected_gates)):
