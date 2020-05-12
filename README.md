@@ -2,6 +2,9 @@
 
 A modern web application based on deep learning and advanced image processing techniques to analyze images of logic circuits and simulate their truth table.
 
+This is the backend of the [Digital Logic Circuits Analyzer](https://github.com/ahmedkrmn/Digital-Logic-Circuits-Analyzer) application. The main server is based on Nodejs and Express. They provide a REST API interface for interacting with the Python scripts on the server which do the actual computation and analysis.
+
+<p align="center"> <img src="api_diagram.png"/> </p>
 
 #### Tech Stack
 
@@ -9,11 +12,6 @@ A modern web application based on deep learning and advanced image processing te
 |--------------------|-----------------------------------------------|
 | NodeJs and Express | REST API                                      |
 | Python             | Image Processing and Truth Table Calculations |
-
-
-This is the backend of the [Digital Logic Circuits Analyzer](https://github.com/ahmedkrmn/Digital-Logic-Circuits-Analyzer) application. The main server is based on Nodejs and Express. They provide a REST API interface for interacting with the Python scripts on the server which do the actual computation and analysis.
-
-<p align="center"> <img src="api_diagram.png"/> </p>
 
 The backend is hosted on a Heroku server with the following build environemts:
 1. Apt
